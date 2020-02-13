@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Question</title>
+</head>
+<body>
+    <h1>{{ question.title }}</h1>
+    <div class="qa-text">
+       {{ question.text }}
+    </div> 
+    <hr>
+    <ul class="qa-ans"></ul>
+    {% for ans in answers %}
+        <li>
+            {{ ans.text }}
+        </li>
+    {% endfor %}
+</body>
+</html>
