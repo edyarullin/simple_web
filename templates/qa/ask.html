@@ -4,22 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Question</title>
+    <title>Create Ask</title>
 </head>
 <body>
-    <h1>{{ question.title }}</h1>
-    <div class="qa-text">
-       {{ question.text }}
-    </div> 
-    <hr>
-    <ul class="qa-ans"></ul>
-    {% for ans in answers %}
-        <li>
-            {{ ans.text }}
-        </li>
+    <h1>Новый вопрос</h1>
+    {% for e in form.non_field_errors %}
+        <div class="alert alert-danger">{{ e }}</div>
     {% endfor %}
-    {% if answers|length > 0 %}<hr>{% endif %}
-    <form class="form-horizontal" method="post" action="{{ question.get_url }}">
+    <form class="form-horizontal" method="post" action="{% url 'qa-ask' %}">
         {% csrf_token %}
         <fieldset>
             {% for field in form %}
@@ -32,8 +24,8 @@
         </fieldset>
         <div class="form-actions">
             <button type="submit" class="btn btn-primary">
-            Ответить</button>
+            Сохранить</button>
         </div>
-    </form> 
+    </form>  
 </body>
 </html>

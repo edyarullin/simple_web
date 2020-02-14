@@ -1,10 +1,11 @@
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
 from django.views.decorators.http import require_GET
 from django.core.paginator import Paginator, EmptyPage
 from django.urls import reverse
 
 from .models import Question
+from .forms import AskForm, AnswerForm
 
 
 def test(request, *args, **kwargs):
@@ -54,10 +55,30 @@ def popular_questions(request):
     })
 
 
-@require_GET
 def question_details(request, id):
     question = get_object_or_404(Question, id=id)
+    if request.method == 'POST':
+        form = AnswerForm(question, request.POST)
+        if form.is_valid():
+            model = form.save()
+            return HttpResponseRedirect(question.get_url())
+    else:
+        form = AnswerForm(question)
     return render(request, 'qa/question_details.html', {
         'question': question,
         'answers': question.answer_set.all(),
+        'form': form
+    })
+
+
+def ask_question(request):
+    if request.method == 'POST':
+        form = AskForm(request.POST)
+        if form.is_valid():
+            model = form.save()
+            return HttpResponseRedirect(model.get_url())
+    else:
+        form = AskForm()
+    return render(request, 'qa/ask.html', {
+        'form': form,
     })
