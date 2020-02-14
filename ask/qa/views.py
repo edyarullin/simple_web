@@ -58,12 +58,14 @@ def popular_questions(request):
 def question_details(request, id):
     question = get_object_or_404(Question, id=id)
     if request.method == 'POST':
-        form = AnswerForm(question, request.POST)
+        form = AnswerForm(request.POST)
+        form.set_question(question)
         if form.is_valid():
             model = form.save()
             return HttpResponseRedirect(question.get_url())
     else:
-        form = AnswerForm(question)
+        form = AnswerForm()
+        form.set_question(question)
     return render(request, 'qa/question_details.html', {
         'question': question,
         'answers': question.answer_set.all(),

@@ -18,11 +18,14 @@ class AskForm(forms.Form):
 
 class AnswerForm(forms.Form):
     text = forms.CharField(widget=forms.Textarea)
+    question = forms.IntegerField(required=False, widget=forms.HiddenInput, label='')
 
-    def __init__(self, question, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         self._user = User.objects.get(id=1)
-        self._question = question
         super(AnswerForm, self).__init__(*args, **kwargs)
+    
+    def set_question(self, q):
+        self._question = q
     
     def save(self):
         self.cleaned_data['author'] = self._user
