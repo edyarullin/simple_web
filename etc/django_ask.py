@@ -1,3 +1,3 @@
-pythonpath = '/home/seigo/simple_web/ask'
+pythonpath = '/home/box/web/ask'
 bind = "0.0.0.0:8000"
 workers = 2
