@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Регистрация</title>
+</head>
+<body>
+    <h1>Регистрация</h1>
+    {% for e in form.non_field_errors %}
+        <div class="alert alert-danger">{{ e }}</div>
+    {% endfor %}
+    <form class="form-horizontal" method="post" action="{% url 'qa-signup' %}">
+        {% csrf_token %}
+        <fieldset>
+            {% for field in form %}
+                <div class="control-group
+                    {% if field.errors %}has-error{% endif %}">
+                    <label class="control-label">{{ field.label }}</label>
+                    <div class="controls">{{ field }}</div>
+                </div>
+            {% endfor %}
+        </fieldset>
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+            Зарегистрироваться</button>
+        </div>
+    </form>  
+</body>
+</html>
